@@ -1,289 +1,202 @@
-/*=========================================
-  PixelVista Image Gallery
-  CodeAlpha Internship
-==========================================*/
+/*====================================
+        NeoCalc JavaScript
+    CodeAlpha Task 2
+=====================================*/
 
-// ===============================
-// Select Elements
-// ===============================
+const screen = document.getElementById("screen");
 
-const galleryItems = document.querySelectorAll(".gallery-item");
-const filterButtons = document.querySelectorAll(".filter-btn");
+const buttons = document.querySelectorAll(".buttons button");
 
-const lightbox = document.querySelector(".lightbox");
-const lightboxImg = document.querySelector(".lightbox-img");
-const caption = document.querySelector(".caption");
-const counter = document.querySelector(".counter");
+// Add button values to display
+buttons.forEach(button => {
 
-const closeBtn = document.querySelector(".close");
-const nextBtn = document.querySelector(".next");
-const prevBtn = document.querySelector(".prev");
+    button.addEventListener("click", () => {
 
-// ===============================
-// Variables
-// ===============================
+        const value = button.innerText;
 
-let currentIndex = 0;
-let visibleItems = [];
+        switch (value) {
 
-// ===============================
-// Update Visible Images
-// ===============================
+            case "C":
+                clearScreen();
+                break;
 
-function updateVisibleItems() {
+            case "=":
+                calculate();
+                break;
 
-    visibleItems = [];
+            case "⌫":
+                deleteLast();
+                break;
 
-    galleryItems.forEach(item => {
+            case "%":
+                percentage();
+                break;
 
-        if (window.getComputedStyle(item).display !== "none") {
+            default:
 
-            visibleItems.push(item);
+                // Ignore icon text from delete button
+                if (button.classList.contains("delete")) {
+                    deleteLast();
+                } else {
+                    appendValue(value);
+                }
 
         }
 
     });
 
-}
+});
 
 // ===============================
-// Open Lightbox
+// Add Value
 // ===============================
 
-function openLightbox(index) {
+function appendValue(value) {
 
-    updateVisibleItems();
+    if (screen.value === "Error") {
 
-    currentIndex = index;
+        screen.value = "";
 
-    const currentItem = visibleItems[currentIndex];
+    }
 
-    const image = currentItem.querySelector("img");
-
-    const title = currentItem.querySelector("h3");
-
-    lightboxImg.src = image.src;
-
-    lightboxImg.alt = image.alt;
-
-    caption.textContent = title.textContent;
-
-    counter.textContent = `${currentIndex + 1} / ${visibleItems.length}`;
-
-    lightbox.classList.add("show");
+    screen.value += value;
 
 }
 
 // ===============================
-// Close Lightbox
+// Clear Screen
 // ===============================
 
-function closeLightbox() {
+function clearScreen() {
 
-    lightbox.classList.remove("show");
-
-}
-
-closeBtn.addEventListener("click", closeLightbox);
-
-// ===============================
-// Next Image
-// ===============================
-
-function nextImage() {
-
-    currentIndex++;
-
-    if (currentIndex >= visibleItems.length) {
-
-        currentIndex = 0;
-
-    }
-
-    openLightbox(currentIndex);
+    screen.value = "";
 
 }
 
 // ===============================
-// Previous Image
+// Delete Last Character
 // ===============================
 
-function previousImage() {
+function deleteLast() {
 
-    currentIndex--;
-
-    if (currentIndex < 0) {
-
-        currentIndex = visibleItems.length - 1;
-
-    }
-
-    openLightbox(currentIndex);
+    screen.value = screen.value.slice(0, -1);
 
 }
 
-nextBtn.addEventListener("click", nextImage);
-
-prevBtn.addEventListener("click", previousImage);
-
 // ===============================
-// Gallery Click
+// Percentage
 // ===============================
 
-galleryItems.forEach(item => {
+function percentage() {
 
-    item.addEventListener("click", () => {
+    if (screen.value !== "") {
 
-        updateVisibleItems();
+        screen.value = eval(screen.value) / 100;
 
-        currentIndex = visibleItems.indexOf(item);
+    }
 
-        openLightbox(currentIndex);
-
-    });
-
-});
+}
 
 // ===============================
-// Filter Images
+// Calculate
 // ===============================
 
-filterButtons.forEach(button => {
+function calculate() {
 
-    button.addEventListener("click", () => {
+    try {
 
-        filterButtons.forEach(btn => {
+        if (screen.value === "") return;
 
-            btn.classList.remove("active");
+        let result = eval(screen.value);
 
-        });
+        if (!isFinite(result)) {
 
-        button.classList.add("active");
+            screen.value = "Error";
 
-        const filter = button.dataset.filter;
+        } else {
 
-        galleryItems.forEach(item => {
+            screen.value = result;
 
-            if (filter === "all") {
+        }
 
-                item.style.display = "block";
+    }
 
-            }
+    catch {
 
-            else if (item.classList.contains(filter)) {
+        screen.value = "Error";
 
-                item.style.display = "block";
+    }
 
-            }
-
-            else {
-
-                item.style.display = "none";
-
-            }
-
-        });
-
-        updateVisibleItems();
-
-    });
-
-});
+}
 
 // ===============================
-// Keyboard Controls
+// Keyboard Support
 // ===============================
 
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", (e) => {
 
-    if (!lightbox.classList.contains("show")) return;
+    const key = e.key;
 
-    switch (event.key) {
+    // Numbers
 
-        case "ArrowRight":
+    if (!isNaN(key)) {
 
-            nextImage();
+        appendValue(key);
 
-            break;
+    }
 
-        case "ArrowLeft":
+    // Operators
 
-            previousImage();
+    if (["+", "-", "*", "/", "."].includes(key)) {
 
-            break;
+        appendValue(key);
 
-        case "Escape":
+    }
 
-            closeLightbox();
+    // Enter
 
-            break;
+    if (key === "Enter") {
+
+        e.preventDefault();
+
+        calculate();
+
+    }
+
+    // Backspace
+
+    if (key === "Backspace") {
+
+        deleteLast();
+
+    }
+
+    // Escape
+
+    if (key === "Escape") {
+
+        clearScreen();
+
+    }
+
+    // Percentage
+
+    if (key === "%") {
+
+        percentage();
 
     }
 
 });
 
 // ===============================
-// Close When Clicking Background
+// Prevent Multiple Operators
 // ===============================
 
-lightbox.addEventListener("click", (event) => {
+screen.addEventListener("input", () => {
 
-    if (event.target === lightbox) {
-
-        closeLightbox();
-
-    }
+    screen.value = screen.value.replace(/[^0-9+\-*/%.]/g, "");
 
 });
 
-// ===============================
-// Touch Swipe Support (Mobile)
-// ===============================
-
-let startX = 0;
-
-lightbox.addEventListener("touchstart", (e) => {
-
-    startX = e.changedTouches[0].screenX;
-
-});
-
-lightbox.addEventListener("touchend", (e) => {
-
-    let endX = e.changedTouches[0].screenX;
-
-    if (startX - endX > 60) {
-
-        nextImage();
-
-    }
-
-    if (endX - startX > 60) {
-
-        previousImage();
-
-    }
-
-});
-
-// ===============================
-// Image Preloading
-// ===============================
-
-galleryItems.forEach(item => {
-
-    const img = item.querySelector("img");
-
-    const preload = new Image();
-
-    preload.src = img.src;
-
-});
-
-// ===============================
-// Initialize
-// ===============================
-
-updateVisibleItems();
-
-console.log("✅ PixelVista Gallery Loaded Successfully");
+console.log("NeoCalc Loaded Successfully");

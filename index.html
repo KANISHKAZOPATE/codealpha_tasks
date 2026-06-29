@@ -6,261 +6,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>PixelVista | Creative Image Gallery</title>
+    <title>NeoCalc | Smart Calculator</title>
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
+    <!-- ================= HEADER ================= -->
 
     <header>
 
-        <nav class="navbar">
+        <h1>
+            <i class="fa-solid fa-calculator"></i>
+            NeoCalc
+        </h1>
 
-            <div class="logo">
-
-                <i class="fa-solid fa-camera-retro"></i>
-
-                PixelVista
-
-            </div>
-
-            <ul class="nav-links">
-
-                <li><a href="#home">Home</a></li>
-
-                <li><a href="#gallery">Gallery</a></li>
-
-                <li><a href="#about">About</a></li>
-
-            </ul>
-
-        </nav>
+        <p>Smart Calculator | CodeAlpha Frontend Development</p>
 
     </header>
 
-    <!-- ================= HERO ================= -->
+    <!-- ================= CALCULATOR ================= -->
 
-    <section class="hero" id="home">
+    <main>
 
-        <div class="hero-content">
+        <div class="calculator">
 
-            <h1>Create. Explore. Inspire.</h1>
+            <!-- Display -->
 
-            <p>
-                A modern responsive image gallery created using
-                HTML, CSS and JavaScript.
-            </p>
+            <div class="display">
 
-            <a href="#gallery" class="btn">
-                Explore Gallery
-            </a>
+                <input
+                    type="text"
+                    id="screen"
+                    placeholder="0"
+                    readonly>
 
-        </div>
+            </div>
 
-    </section>
+            <!-- Buttons -->
 
-    <!-- ================= FILTER BUTTONS ================= -->
+            <div class="buttons">
 
-    <section class="filter-section">
+                <button class="operator clear">C</button>
 
-        <h2>Gallery Categories</h2>
+                <button class="operator delete">⌫</button>
 
-        <div class="buttons">
+                <button class="operator">%</button>
 
-            <button class="filter-btn active" data-filter="all">
-                All
-            </button>
+                <button class="operator">/</button>
 
-            <button class="filter-btn" data-filter="nature">
-                Nature
-            </button>
+                <button>7</button>
 
-            <button class="filter-btn" data-filter="city">
-                City
-            </button>
+                <button>8</button>
 
-            <button class="filter-btn" data-filter="animals">
-                Animals
-            </button>
+                <button>9</button>
 
-            <button class="filter-btn" data-filter="travel">
-                Travel
-            </button>
+                <button class="operator">*</button>
 
-        </div>
+                <button>4</button>
 
-    </section>
+                <button>5</button>
 
-    <!-- ================= GALLERY ================= -->
+                <button>6</button>
 
-    <section class="gallery" id="gallery">
+                <button class="operator">-</button>
 
-        <div class="gallery-item nature">
+                <button>1</button>
 
-            <img src="images/nature1.jpg" alt="Nature">
+                <button>2</button>
 
-            <div class="overlay">
+                <button>3</button>
 
-                <h3>Forest</h3>
+                <button class="operator">+</button>
+
+                <button class="zero">0</button>
+
+                <button>.</button>
+
+                <button class="equal">=</button>
 
             </div>
 
         </div>
 
-        <div class="gallery-item nature">
-
-            <img src="images/nature2.jpg" alt="Nature">
-
-            <div class="overlay">
-
-                <h3>Mountains</h3>
-
-            </div>
-
-        </div>
-
-        <div class="gallery-item city">
-
-            <img src="images/city1.jpg" alt="City">
-
-            <div class="overlay">
-
-                <h3>City Lights</h3>
-
-            </div>
-
-        </div>
-
-        <div class="gallery-item city">
-
-            <img src="images/city2.jpg" alt="City">
->
-
-            <div class="overlay">
-
-                <h3>Skyscrapers</h3>
-
-            </div>
-
-        </div>
-
-        <div class="gallery-item animals">
-
-            <img src="images/animal1.jpg" alt="Animal">
-
-            <div class="overlay">
-
-                <h3>Wildlife</h3>
-
-            </div>
-
-        </div>
-
-        <div class="gallery-item animals">
-
-           <img src="images/animal2.jpg" alt="Animal">
-
-            <div class="overlay">
-
-                <h3>Parrot</h3>
-
-            </div>
-
-        </div>
-
-        <div class="gallery-item travel">
-
-            <img src="images/travel1.jpg" alt="Travel">
-
-            <div class="overlay">
-
-                <h3>Beach</h3>
-
-            </div>
-
-        </div>
-
-        <div class="gallery-item travel">
-
-            <img src="images/travel2.jpg" alt="Travel">
-
-            <div class="overlay">
-
-                <h3>Adventure</h3>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- ================= LIGHTBOX ================= -->
-
-    <div class="lightbox">
-
-        <span class="close">&times;</span>
-
-        <button class="prev">
-
-            <i class="fa-solid fa-angle-left"></i>
-
-        </button>
-
-        <img class="lightbox-img" src="" alt="">
-
-        <button class="next">
-
-            <i class="fa-solid fa-angle-right"></i>
-
-        </button>
-
-        <div class="caption">
-
-            Image Caption
-
-        </div>
-
-        <div class="counter">
-
-            1 / 8
-
-        </div>
-
-    </div>
-
-    <!-- ================= ABOUT ================= -->
-
-    <section class="about" id="about">
-
-        <h2>About This Project</h2>
-
-        <p>
-
-            
-           PixelVista is my frontend development project created for the CodeAlpha Internship. It demonstrates responsive web design, JavaScript DOM manipulation, category filtering, and an interactive lightbox with smooth animations.
-
-            It includes category filters,
-            lightbox preview,
-            previous-next navigation,
-            smooth animations,
-            responsive layout,
-            and keyboard navigation.
-
-        </p>
-
-    </section>
+    </main>
 
     <!-- ================= FOOTER ================= -->
 
@@ -268,13 +107,15 @@
 
         <p>
 
-            © 2026 PixelVista Gallery
+            © 2026 NeoCalc
 
-            Designed by Kanishka Zopate
+            | Designed by Kanishka Zopate
 
         </p>
 
     </footer>
+
+    <!-- JavaScript -->
 
     <script src="script.js"></script>
 
